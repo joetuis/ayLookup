@@ -4,7 +4,10 @@
 * Customize search result, can combine multiple columnes with less codig
 * High performance using SOSL + SOQL
 
+![lookupdemo1](https://user-images.githubusercontent.com/10925418/63737458-7d822500-c854-11e9-95a5-e0bb54303603.gif)
 
+
+![lookupdemo2](https://user-images.githubusercontent.com/10925418/63737476-8a067d80-c854-11e9-98a2-34500d0ad43c.gif)
 
 Enjoy using web components
 
