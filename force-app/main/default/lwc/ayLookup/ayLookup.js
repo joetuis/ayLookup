@@ -1,8 +1,8 @@
 /**
-* @File Name:	icbLookup
+* @File Name:	ayLookup
 * @Description: Component to Search relationship 
-* @Example <c:icbLookup required="true" type="Account" label="Search" placeholder="Search Account" sobjectType="Account">
-           </c:icbLookup>
+* @Example <c:ayLookup required="true" type="Account" label="Search" placeholder="Search Account" sobjectType="Account">
+           </c:ayLookup>
 * @Author:   	Fan Yang
 * @group: 		LWC
 * @Modification Log	:
@@ -14,14 +14,14 @@ ________________________________________________________________________________
 */
 
 import { LightningElement, track, api } from 'lwc';
-import searchAction from '@salesforce/apex/ICB_LookupController.search';
-import searchRecentViewed from '@salesforce/apex/ICB_LookupController.searchRecentViewed';
-import getCurrentValue from '@salesforce/apex/ICB_LookupController.getCurrentValue';
+import searchAction from '@salesforce/apex/ay_LookupController.search';
+import searchRecentViewed from '@salesforce/apex/ay_LookupController.searchRecentViewed';
+import getCurrentValue from '@salesforce/apex/ay_LookupController.getCurrentValue';
 
 const MINIMAL_SEARCH_TERM_LENGTH = 2; // Min number of chars required to search
 const SEARCH_DELAY = 300; // Wait 300 ms after user stops typing then, peform search
 
-export default class IcbLookup extends LightningElement {
+export default class ayLookup extends LightningElement {
     @api sobjectType;
     @api recordTypes = null;
     @api fields = [];
@@ -47,7 +47,7 @@ export default class IcbLookup extends LightningElement {
     cleanSearchTerm;
     blurTimeout;
     searchThrottlingTimeout;
-    recentViewed;
+    recentViewed = [];
     
     @api get value(){return this.selection;}
     set value(value){
@@ -133,8 +133,8 @@ export default class IcbLookup extends LightningElement {
                 "filters" : this.filters
             }
         ).then(results => {
-            this.recentViewed = results;
-            this.searchResults = results
+            this.recentViewed = results || [];
+            this.searchResults = results || [];
         })
         .catch(err => {
             console.error(err);

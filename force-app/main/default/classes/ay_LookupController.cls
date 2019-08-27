@@ -1,6 +1,6 @@
 /**
-* @File Name:	ICB_LookupController
-* @Description: Controller for lightning web component icbLookup
+* @File Name:	ay_LookupController
+* @Description: Controller for lightning web component ayLookup
 * @Author:   	Fan Yang
 * @group: 		LWC
 * @Modification Log	:
@@ -9,7 +9,7 @@ ________________________________________________________________________________
 * 1.0       2019-08-12  Fan Yang    Created the file/classes
 * 1.1       2019-08-14  Fan Yang    Added filter feature
 */
-public with sharing class ICB_LookupController {
+public with sharing class ay_LookupController {
     public final static String DELIMITER = ' - ';
     private final static Integer MAX_RESULTS = 5;
 
@@ -20,7 +20,7 @@ public with sharing class ICB_LookupController {
     //fields  -- fields to query optional
     //filters  --  extra filters optional
     @AuraEnabled(Cacheable=true)
-    public static List<ICB_LookupSearchResult> search(String type, String searchString, String[] recordTypes, String[] fields, String[] filters) {
+    public static List<ay_LookupSearchResult> search(String type, String searchString, String[] recordTypes, String[] fields, String[] filters) {
         // Prepare query paramters
         searchString += '*';
         
@@ -50,10 +50,10 @@ public with sharing class ICB_LookupController {
         }
 
         // Prepare results
-        List<ICB_LookupSearchResult> ret = new List<ICB_LookupSearchResult>();
+        List<ay_LookupSearchResult> ret = new List<ay_LookupSearchResult>();
         for(SObject sobj : records){
             String n = fields.size() > 0 ? getDisplayName(sobj, fields) : (String)sobj.get(nameField);
-            ICB_LookupSearchResult sr = new ICB_LookupSearchResult(
+            ay_LookupSearchResult sr = new ay_LookupSearchResult(
                 (String)sobj.get('Id'), type, getIcon(type), n, '');
 
             ret.add(sr);
@@ -65,7 +65,7 @@ public with sharing class ICB_LookupController {
     //list recent view record
     //record type filter applied
     @AuraEnabled
-    public static List<ICB_LookupSearchResult> searchRecentViewed(String type, String[] recordTypes, String[] fields, String[] filters){
+    public static List<ay_LookupSearchResult> searchRecentViewed(String type, String[] recordTypes, String[] fields, String[] filters){
         Set<Id> ids = new Set<Id>();
         for(RecentlyViewed rv : [Select Id, LastViewedDate From RecentlyViewed Where type = :type order by LastViewedDate Desc]){
             ids.add(rv.Id);
@@ -84,14 +84,14 @@ public with sharing class ICB_LookupController {
             return null;
 
         else{
-            List<ICB_LookupSearchResult> ret = new List<ICB_LookupSearchResult>();
+            List<ay_LookupSearchResult> ret = new List<ay_LookupSearchResult>();
             String whereClause = constructWhereClause(recordTypes, filters, false);
             String q = 'Select Id, ' + qStrDis + ' From ' + type + ' Where Id in :ids ' + whereClause + ' limit 10';
             // System.debug('--------------The query is - ' + q);
             List<SObject> qRes = Database.query(q);
             for(SObject sobj : qRes){
                 String n = fields.size() > 0 ? getDisplayName(sobj, fields) : (String)sobj.get(nameField);
-                ICB_LookupSearchResult sr = new ICB_LookupSearchResult(
+                ay_LookupSearchResult sr = new ay_LookupSearchResult(
                     (String)sobj.get('Id'), type, getIcon(type), n, '');
                 ret.add(sr);
             }
@@ -165,7 +165,7 @@ public with sharing class ICB_LookupController {
     }
 
     @AuraEnabled
-    public static ICB_LookupSearchResult getCurrentValue(String type, String value, String[] fields){
+    public static ay_LookupSearchResult getCurrentValue(String type, String value, String[] fields){
         if(String.isBlank(type)){
             return null;
         }
@@ -201,7 +201,7 @@ public with sharing class ICB_LookupController {
 
         SObject sobj = oList[0];
         String n = fields.size() > 0 ? getDisplayName(sobj, fields) : (String)sobj.get(nameField);
-        ICB_LookupSearchResult sr = new ICB_LookupSearchResult(
+        ay_LookupSearchResult sr = new ay_LookupSearchResult(
             (String)sobj.get('Id'), type, getIcon(type), n, '');
 
 		return sr;
