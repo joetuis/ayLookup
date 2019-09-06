@@ -20,7 +20,7 @@ public with sharing class ay_LookupController {
     //fields  -- fields to query optional
     //filters  --  extra filters optional
     @AuraEnabled(Cacheable=true)
-    public static List<ICB_LookupSearchResult> search(String type, String searchString, String[] recordTypes, String[] fields, String[] filters) {
+    public static List<ay_LookupSearchResult> search(String type, String searchString, String[] recordTypes, String[] fields, String[] filters) {
         // Prepare query paramters
         searchString += '*';
         String whereClause = constructWhereClause(recordTypes, filters, true);
@@ -54,10 +54,10 @@ public with sharing class ay_LookupController {
         }
 
         // Prepare results
-        List<ICB_LookupSearchResult> ret = new List<ICB_LookupSearchResult>();
+        List<ay_LookupSearchResult> ret = new List<ay_LookupSearchResult>();
         for(SObject sobj : records){
             String n = fields.size() > 0 ? getDisplayName(sobj, fields) : (String)sobj.get(nameField);
-            ICB_LookupSearchResult sr = new ICB_LookupSearchResult(
+            ay_LookupSearchResult sr = new ay_LookupSearchResult(
                 (String)sobj.get('Id'), type, getIcon(type), n, '');
 
             ret.add(sr);
@@ -69,7 +69,7 @@ public with sharing class ay_LookupController {
     //list recent view record
     //record type filter applied
     @AuraEnabled
-    public static List<ICB_LookupSearchResult> searchRecentViewed(String type, String[] recordTypes, String[] fields, String[] filters){
+    public static List<ay_LookupSearchResult> searchRecentViewed(String type, String[] recordTypes, String[] fields, String[] filters){
         Set<Id> ids = new Set<Id>();
         for(RecentlyViewed rv : [Select Id, LastViewedDate From RecentlyViewed Where type = :type order by LastViewedDate Desc]){
             ids.add(rv.Id);
@@ -88,14 +88,14 @@ public with sharing class ay_LookupController {
             return null;
 
         else{
-            List<ICB_LookupSearchResult> ret = new List<ICB_LookupSearchResult>();
+            List<ay_LookupSearchResult> ret = new List<ay_LookupSearchResult>();
             String whereClause = constructWhereClause(recordTypes, filters, false);
             String q = 'Select Id, ' + qStrDis + ' From ' + type + ' Where Id in :ids ' + whereClause + ' limit 10';
             // System.debug('--------------The query is - ' + q);
             List<SObject> qRes = Database.query(q);
             for(SObject sobj : qRes){
                 String n = fields.size() > 0 ? getDisplayName(sobj, fields) : (String)sobj.get(nameField);
-                ICB_LookupSearchResult sr = new ICB_LookupSearchResult(
+                ay_LookupSearchResult sr = new ay_LookupSearchResult(
                     (String)sobj.get('Id'), type, getIcon(type), n, '');
                 ret.add(sr);
             }
@@ -173,7 +173,7 @@ public with sharing class ay_LookupController {
     }
 
     @AuraEnabled
-    public static ICB_LookupSearchResult getCurrentValue(String type, String value, String[] fields){
+    public static ay_LookupSearchResult getCurrentValue(String type, String value, String[] fields){
         List<SObject> oList = getByIds(type, new List<String>{value}, fields);
         if(oList == null || oList.size()==0) {
             return null;
@@ -190,7 +190,7 @@ public with sharing class ay_LookupController {
         // System.debug('fields - ' + fields);
         // System.debug('getDisplayName - ' + getDisplayName(sobj, fields));
         String n = (fields != null && fields.size() > 0)? getDisplayName(sobj, fields) : (String)sobj.get(nameField);
-        ICB_LookupSearchResult sr = new ICB_LookupSearchResult(
+        ay_LookupSearchResult sr = new ay_LookupSearchResult(
             (String)sobj.get('Id'), type, getIcon(type), n, '');
 
 		return sr;
@@ -199,7 +199,7 @@ public with sharing class ay_LookupController {
 
     //get all values
     @AuraEnabled
-    public static List<ICB_LookupSearchResult> searchByIds(String type, String[] ids, String[] fields){
+    public static List<ay_LookupSearchResult> searchByIds(String type, String[] ids, String[] fields){
         List<SObject> oList = getByIds(type, ids, fields);
         if(oList == null || oList.size()==0) {
             return null;
@@ -211,10 +211,10 @@ public with sharing class ay_LookupController {
         }
         
         String nameField = getSobjectNameField(objType);
-        List<ICB_LookupSearchResult> ret = new List<ICB_LookupSearchResult>();
+        List<ay_LookupSearchResult> ret = new List<ay_LookupSearchResult>();
         for(SObject sObj : oList){
             String n = (fields != null && fields.size() > 0) ? getDisplayName(sobj, fields) : (String)sobj.get(nameField);
-            ret.add(new ICB_LookupSearchResult(
+            ret.add(new ay_LookupSearchResult(
                 (String)sobj.get('Id'), type, getIcon(type), n, '')
             );
         }
