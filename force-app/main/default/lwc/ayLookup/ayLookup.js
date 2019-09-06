@@ -17,6 +17,7 @@ import { LightningElement, track, api } from 'lwc';
 import searchAction from '@salesforce/apex/ay_LookupController.search';
 import searchRecentViewed from '@salesforce/apex/ay_LookupController.searchRecentViewed';
 import getCurrentValue from '@salesforce/apex/ay_LookupController.getCurrentValue';
+import searchByIds from '@salesforce/apex/ay_LookupController.searchByIds';
 
 const MINIMAL_SEARCH_TERM_LENGTH = 2; // Min number of chars required to search
 const SEARCH_DELAY = 300; // Wait 300 ms after user stops typing then, peform search
@@ -37,17 +38,19 @@ export default class ayLookup extends LightningElement {
     get filters(){return this.soqlFilter;}
     set filters(value){
         this.soqlFilter = value;
-        this.getRecentView();
+        if(!this.disableRecentView)
+            this.getRecentView();
     }
     @track searchTerm = '';
     @track searchResults = [];
     @track hasFocus = false;
     @track infoMessage;
+    @api disableRecentView;//if true recentview is disabled
 
     cleanSearchTerm;
     blurTimeout;
     searchThrottlingTimeout;
-    recentViewed = [];
+    preset = [];
     
     @api get value(){return this.selection;}
     set value(value){
@@ -124,19 +127,39 @@ export default class ayLookup extends LightningElement {
     }
 
     getRecentView(){
-        this.recentViewed = [];
-        searchRecentViewed(
-            {
+        if(this.disableRecentView) return; //disable the recentview
+        this.preset = [];
+        searchRecentViewed({
                 "type" : this.sobjectType,
                 "recordTypes" : this.recordTypes,
                 "fields" : this.fields,
                 "filters" : this.filters
-            }
-        ).then(results => {
-            this.recentViewed = results || [];
+        }).then(results => {
+            this.preset = results || [];
             this.searchResults = results || [];
         })
         .catch(err => {
+            console.error(err);
+            throw new Error("Error calling searchRecentViewed: " + err)
+        })
+    }
+
+    //set search result, show when user click the input
+    @api setPresetSearchResult(ids){
+        if(!ids || ids.length === 0){
+            this.searchResults = [];
+            return;
+        }
+
+        this.searchResults = [];
+        searchByIds({
+            "type" : this.sobjectType,
+            "ids" : ids,
+            "fields" : this.fields
+        }).then(results=>{
+            this.preset = results || [];
+            this.searchResults = results || [];
+        }).catch(err => {
             console.error(err);
             throw new Error("Error calling searchRecentViewed: " + err)
         })
@@ -158,7 +181,7 @@ export default class ayLookup extends LightningElement {
         this.cleanSearchTerm = newCleanSearchTerm;
 
         if(newCleanSearchTerm.length === 0){
-            this.searchResults = this.recentViewed;
+            this.searchResults = this.preset;
             return;
         }
 
@@ -233,7 +256,7 @@ export default class ayLookup extends LightningElement {
 
         // Reset search
         this.searchTerm = '';
-        this.searchResults = this.recentViewed.length > 0 ? this.recentViewed : [];
+        this.searchResults = this.preset.length > 0 ? this.preset : [];
 
 
         // Notify parent components that selection has changed

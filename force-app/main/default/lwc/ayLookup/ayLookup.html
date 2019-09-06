@@ -1,6 +1,10 @@
 <template>
     <div class="slds-form-element">
         <template if:true={label}>
+            <template if:true={required}>
+                <abbr class="required">*</abbr> 
+            </template>
+            
             <label class="slds-form-element__label" for="combobox">{label}</label>
         </template>
 
