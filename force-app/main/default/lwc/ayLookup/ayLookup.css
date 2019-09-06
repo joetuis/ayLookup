@@ -49,3 +49,10 @@
 .listbox .slds-listbox__option-text_entity, .slds-listbox__option-text--entity{
     margin-top: 7px;
 }
+
+abbr.required{
+    font-size: 0.8125rem;
+    margin: 0 .125rem;
+    color: rgb(194, 57, 52);
+    font-weight: normal;
+}

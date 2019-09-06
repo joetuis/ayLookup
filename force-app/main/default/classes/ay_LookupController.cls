@@ -23,7 +23,6 @@ public with sharing class ay_LookupController {
     public static List<ay_LookupSearchResult> search(String type, String searchString, String[] recordTypes, String[] fields, String[] filters) {
         // Prepare query paramters
         searchString += '*';
-        
         String whereClause = constructWhereClause(recordTypes, filters, true);
 
         SObjectType objType = Schema.getGlobalDescribe().get(type);
@@ -33,16 +32,21 @@ public with sharing class ay_LookupController {
         String nameField = getSobjectNameField(objType);
         if(fields == null)
             fields = new List<String>();
-        String qStrDis = String.join(fields, ',') + 
-            (fields.contains(nameField) ? '' : nameField);
+
+        if(!fields.contains(nameField)){
+            fields.add(nameField);
+        }
+
+        String qStrDis = String.join(fields, ',');
+            
 
         // Execute search query
         String query = 'FIND :searchString IN ALL FIELDS RETURNING '
                           + type +'(Id, ' + qStrDis + ' ' 
                           + whereClause + ' ORDER BY systemmodstamp) LIMIT 20';
-
         List<List<SObject>> results =  Search.query(query);
-        List<SObject> records;
+        List<SObject> records;  
+        // System.debug('+++++++++++++records results:' + results);
         if(results.size()>0){
             records = results[0];
         }else{
@@ -101,7 +105,7 @@ public with sharing class ay_LookupController {
     }
 
     //consturct where clause
-    public static String constructWhereClause(String[] recordTypes, String[] filters, Boolean startWhere){
+    private static String constructWhereClause(String[] recordTypes, String[] filters, Boolean startWhere){
         if(
             (recordTypes == null || recordTypes.size() == 0) && (filters == null || filters.size() == 0)
         ){
@@ -156,6 +160,10 @@ public with sharing class ay_LookupController {
      * get a string for display
 	*/
     public static String getDisplayName(SObject record, String[] fields){
+        if(fields == null || fields.size() == 0){
+            return '';
+        }
+
         String[] arr = new List<String>();
         for(String f : fields){
             arr.add((String)record.get(f));
@@ -166,18 +174,58 @@ public with sharing class ay_LookupController {
 
     @AuraEnabled
     public static ay_LookupSearchResult getCurrentValue(String type, String value, String[] fields){
+        List<SObject> oList = getByIds(type, new List<String>{value}, fields);
+        if(oList == null || oList.size()==0) {
+            return null;
+        }
+
+        SObjectType objType = Schema.getGlobalDescribe().get(type);
+        if(objType == null){
+            return null;
+        }
+
+        String nameField = getSobjectNameField(objType);
+        SObject sobj = oList[0];
+        // System.debug('sobj - ' + sobj);
+        // System.debug('fields - ' + fields);
+        // System.debug('getDisplayName - ' + getDisplayName(sobj, fields));
+        String n = (fields != null && fields.size() > 0)? getDisplayName(sobj, fields) : (String)sobj.get(nameField);
+        ay_LookupSearchResult sr = new ay_LookupSearchResult(
+            (String)sobj.get('Id'), type, getIcon(type), n, '');
+
+		return sr;
+    }
+
+
+    //get all values
+    @AuraEnabled
+    public static List<ay_LookupSearchResult> searchByIds(String type, String[] ids, String[] fields){
+        List<SObject> oList = getByIds(type, ids, fields);
+        if(oList == null || oList.size()==0) {
+            return null;
+        }
+
+        SObjectType objType = Schema.getGlobalDescribe().get(type);
+        if(objType == null){
+            return null;
+        }
+        
+        String nameField = getSobjectNameField(objType);
+        List<ay_LookupSearchResult> ret = new List<ay_LookupSearchResult>();
+        for(SObject sObj : oList){
+            String n = (fields != null && fields.size() > 0) ? getDisplayName(sobj, fields) : (String)sobj.get(nameField);
+            ret.add(new ay_LookupSearchResult(
+                (String)sobj.get('Id'), type, getIcon(type), n, '')
+            );
+        }
+
+        return ret;
+
+    }
+
+    //query by ids
+    private static List<SObject> getByIds(String type, String[] ids, String[] fields){
         if(String.isBlank(type)){
-            return null;
-        }
-        
-        ID lookupId = null;
-        try{   
-        	lookupId = (ID)value;
-        }catch(Exception e){
-            return null;
-        }
-        
-        if(String.isBlank(lookupId)){
             return null;
         }
         
@@ -192,18 +240,8 @@ public with sharing class ay_LookupController {
         String qStrDis = String.join(fields, ',') + 
             (fields.contains(nameField) ? '' : nameField);
 
-        String query = 'Select Id, '+qStrDis+' From '+type+' Where Id = \''+lookupId+'\'';
+        String query = 'Select Id, '+qStrDis+' From '+type+' Where Id = :ids';
         // System.debug('### Query: '+query);
-        List<SObject> oList = Database.query(query);
-        if(oList.size()==0) {
-            return null;
-        }
-
-        SObject sobj = oList[0];
-        String n = fields.size() > 0 ? getDisplayName(sobj, fields) : (String)sobj.get(nameField);
-        ay_LookupSearchResult sr = new ay_LookupSearchResult(
-            (String)sobj.get('Id'), type, getIcon(type), n, '');
-
-		return sr;
+        return Database.query(query);
     }
 }
