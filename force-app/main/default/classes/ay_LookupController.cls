@@ -41,7 +41,7 @@ public with sharing class ay_LookupController {
             
 
         // Execute search query
-        String query = 'FIND :searchString IN ALL FIELDS RETURNING '
+        String query = 'FIND :searchString IN NAME FIELDS RETURNING '
                           + type +'(Id, ' + qStrDis + ' ' 
                           + whereClause + ' ORDER BY systemmodstamp) LIMIT 20';
         List<List<SObject>> results =  Search.query(query);
