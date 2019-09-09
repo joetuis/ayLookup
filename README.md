@@ -20,27 +20,18 @@ Example 1 lookupExample
 </c:ayLookup>
 
 
-
 1.2 Add a record type filter
 html
-lwc
-record-types={recordTypeFilters}
-
-aura
-recordTypes = "{!v.recordTypes}"
+lwc  record-types={recordTypeFilters}
+aura recordTypes = "{!v.recordTypes}"
 
 js
-lwc
-@track recordTypeFilters = ['0121Q000001YdotQAC'];
+lwc @track recordTypeFilters = ['0121Q000001YdotQAC'];
+aura cmp.set("v.recordTypeFilters", ["0121Q000001YdotQAC"])
 
 
-aura
-cmp.set("v.recordTypeFilters", ["0121Q000001YdotQAC"])
-
-
-Add a custom filter 
+Add a custom filter
 filters = ["OwnerId = '005360000027hp2'"]
-
 
 
 ***********************************************************************************
@@ -59,8 +50,6 @@ handleSelected(event){
 }
 
 
-
-
 ***********************************************************************************
 ***********************************************************************************
 
@@ -76,8 +65,6 @@ this.template.querySelector("c-ay-lookup").setPresetSearchResult(['0011Q000023el
 aura
 var lookupComp = cmp.find("example3");
 lookupComp.set("v.presetIds", '0011Q000023elZfQAI');
-
-
 
 
 
