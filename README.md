@@ -9,6 +9,9 @@
 
 ![lookupdemo2](https://user-images.githubusercontent.com/10925418/63737476-8a067d80-c854-11e9-98a2-34500d0ad43c.gif)
 
+
+*********************************************************************************************
+*********************************************************************************************
 Example 1 lookupExample
 Basics
 <c:ayLookup required="true" type="Account" label="Search ACCOUNT" placeholder="Search Account" sobjectType="Account">
@@ -33,6 +36,8 @@ Add a custom filter
 filters = ["OwnerId = '005360000027hp2'"]
 
 
+*********************************************************************************************
+*********************************************************************************************
 
 Example 2 handleEventExample
 Hanlde Event
@@ -46,6 +51,11 @@ handleSelected(event){
     console.log(selected);
 }
 
+
+
+
+*********************************************************************************************
+*********************************************************************************************
 
 Example 3 Preset Example
 To use preset seach result, we need disable recentview
