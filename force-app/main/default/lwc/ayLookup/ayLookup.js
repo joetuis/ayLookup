@@ -144,8 +144,16 @@ export default class ayLookup extends LightningElement {
         })
     }
 
+    preIds = [];
+    @api get presetIds(){return this. preIds;}
+    set presetIds(value){
+        this.preIds = value;
+        this.setPresetSearchResult(this.preIds);
+    }
+
     //set search result, show when user click the input
     @api setPresetSearchResult(ids){
+        //debugger;
         if(!ids || ids.length === 0){
             this.searchResults = [];
             return;

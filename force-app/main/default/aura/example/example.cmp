@@ -1,0 +1,73 @@
+<aura:component>
+    <aura:attribute name="recordTypeFilters" type="String" default="[]" />
+    <aura:attribute name="filters" type="String" default="[]" />
+    <aura:handler name="init" value="this" action="{!c.doInit}" />
+
+    <section>
+        <header>
+            <p><b>Example 1 - Basics</b></p>
+        </header>
+
+        <div class="slds-grid slds-gutters slds-wrap body">
+            <div class="slds-col slds-size_1-of-2">
+                <p>1.1 - Simple</p>
+                <c:ayLookup aura:id="exampleBasics" required="true" type="Account" label="Search" placeholder="Search Account" sobjectType="Account" 
+                    recordTypes="{!v.recordTypes}" filters="{!v.filters}">
+                </c:ayLookup>
+            </div>
+    
+            <div class="slds-col slds-size_1-of-2"></div>
+            
+            <div class="slds-col slds-size_1-of-2">
+                <p>1.2 - Filtered</p>
+                <c:ayLookup required="true" type="Account" label="Search" placeholder="Search Account" sobjectType="Account" 
+                    recordTypes="{!v.recordTypes}" filters="{!v.filters}">
+                </c:ayLookup>
+            </div>
+        </div>
+    </section>
+
+
+
+
+
+    <section>
+        <header>
+            <p><b>Example 2 - Handle Events</b></p>
+        </header>
+
+        <div class="slds-grid slds-gutters slds-wrap body">
+            <div class="slds-col slds-size_1-of-2">
+                <p>2.1 - Basics</p>
+                <c:ayLookup type="Account" label="Search" placeholder="Search Account" sobjectType="Account" 
+                    recordTypes="{!v.recordTypes}" filters="{!v.filters}" onselected="{!c.handleOnSelected}">
+                </c:ayLookup>
+            </div>
+        </div>
+    </section>
+
+
+
+
+
+
+    <section>
+        <header>
+            <p><b>Example 3 - Preset List</b></p>
+        </header>
+
+        <div class="slds-grid slds-gutters slds-wrap body">
+            <div class="slds-col slds-size_1-of-2">
+                <p>3.1 - </p>
+                <c:ayLookup aura:id="example3" type="Account" label="Search" placeholder="Search Account" sobjectType="Account" 
+                    disableRecentView="true">
+                </c:ayLookup>
+            </div>
+    
+            <div class="slds-col slds-size_1-of-2"></div>
+            
+        </div>
+    </section>
+
+
+</aura:component>	

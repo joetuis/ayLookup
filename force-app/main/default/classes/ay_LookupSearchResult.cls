@@ -4,11 +4,11 @@
 */
 public class ay_LookupSearchResult {
 
-    private Id id;
-    private String sObjectType;
-    private String icon;
-    private String title;
-    private String subtitle;
+    @testVisible private Id id;
+    @testVisible private String sObjectType;
+    @testVisible private String icon;
+    @testVisible private String title;
+    @testVisible private String subtitle;
 
     public ay_LookupSearchResult(Id id, String sObjectType, String icon, String title, String subtitle) {
         this.id = id;

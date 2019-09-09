@@ -9,6 +9,68 @@
 
 ![lookupdemo2](https://user-images.githubusercontent.com/10925418/63737476-8a067d80-c854-11e9-98a2-34500d0ad43c.gif)
 
-Enjoy using web components
+Example 1 lookupExample
+Basics
+<c:ayLookup required="true" type="Account" label="Search ACCOUNT" placeholder="Search Account" sobjectType="Account">
+</c:ayLookup>
 
-Fan
+
+Add a record type filter
+html
+lwc
+record-types={recordTypeFilters}
+aura
+recordTypes = "{!v.recordTypes}"
+
+js
+lwc
+@track recordTypeFilters = ['0121Q000001YdotQAC'];
+
+aura
+cmp.set("v.recordTypeFilters", ["0121Q000001YdotQAC"])
+
+Add a custom filter 
+filters = ["OwnerId = '005360000027hp2'"]
+
+
+
+Example 2 handleEventExample
+Hanlde Event
+html
+selected={handleSelected}
+
+js
+handleSelected(event){
+    const selected = event.detail.selection;
+    console.log('***Selected:');
+    console.log(selected);
+}
+
+
+Example 3 Preset Example
+To use preset seach result, we need disable recentview
+html
+disableRecentView = true
+
+js
+lwc
+this.template.querySelector("c-ay-lookup").setPresetSearchResult(['0011Q000023elZfQAI'])
+
+aura
+var lookupComp = cmp.find("example3");
+lookupComp.set("v.presetIds", '0011Q000023elZfQAI');
+
+
+
+
+
+
+*********************************************************************************************
+*********************************************************************************************
+*********************************************************************************************
+
+Inspiration is driven by sharing!
+
+Enjoy the web component!!
+
+fanxyang
