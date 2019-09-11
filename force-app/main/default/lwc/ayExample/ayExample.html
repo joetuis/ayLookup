@@ -1,0 +1,68 @@
+<template>
+    <section>
+        <header>
+            <p><b>Example 1 - Basics</b></p>
+        </header>
+
+        <div class="slds-grid slds-gutters slds-wrap body">
+            <div class="slds-col slds-size_1-of-2">
+                <p>1.1 - Simple</p>
+                <c-ay-lookup type="Account" label="Click or Type Name of Account" placeholder="Search Account" sobject-type="Account">
+                </c-ay-lookup>
+            </div>
+    
+            <div class="slds-col slds-size_1-of-2"></div>
+            
+            <div class="slds-col slds-size_1-of-2">
+                <p>1.2 - Filtered</p>
+                <lightning-input class="record-type-input" value={recordTypesInit} label="Only Search for Record Type Id">
+                </lightning-input>
+                <lightning-input class="custom-filter-input" value={filtersInit} label="Custom Filter">
+                    </lightning-input>
+                <lightning-button label="Apply" onclick={handleFilterChange}></lightning-button>
+                <c-ay-lookup type="Account" label="Click or Type Name of Account" placeholder="Search Account" sobject-type="Account" 
+                    record-types={recordTypes} filters={filters}>
+                </c-ay-lookup>
+            </div>
+        </div>
+    </section>
+
+
+    <section>
+        <header>
+            <p><b>Example 2 - Handle Events</b></p>
+        </header>
+
+        <div class="slds-grid slds-gutters slds-wrap body">
+            <div class="slds-col slds-size_1-of-2">
+                <p>2.1 - This example output the selected item</p>
+                <c-ay-lookup type="Account" label="Click or Type Name of Account" placeholder="Search Account" sobject-type="Account" 
+                    record-types={recordTypes} filters={filters} onselected={handleOnSelected}>
+                </c-ay-lookup>
+
+                You've selected:<h3>{selected}</h3>
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <header>
+            <p><b>Example 3 - Preset List</b></p>
+        </header>
+
+        <div class="slds-grid slds-gutters slds-wrap body">
+            <div class="slds-col slds-size_1-of-2">
+                <p>3.1 - The example autofill preset dropdow list</p>
+                <lightning-input value={presetStr} label="Input a list of Account Ids" onchange={handlePresetChange}>
+                </lightning-input>
+
+                <c-ay-lookup class="example3" type="Account" label="Click or Type Name of Account" placeholder="Search Account" sobject-type="Account" 
+                    disable-recent-view preset-ids={preset} required>
+                </c-ay-lookup>
+            </div>
+    
+            <div class="slds-col slds-size_1-of-2"></div>
+            
+        </div>
+    </section>
+</template>

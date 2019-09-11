@@ -1,6 +1,6 @@
 ({
     doInit : function(cmp, e, helper){
-        cmp.set("v.recordTypeFilters", ["0121Q000001YdotQAC"])
+        cmp.set("v.recordTypes", ["0121Q000001YdotQAC"])
         cmp.set("v.filters", ["OwnerId = '005360000027hp2'"])
         // debugger;
         var ex2 = cmp.find("example3");
