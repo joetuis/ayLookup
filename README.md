@@ -1,8 +1,12 @@
-# ayLookup uses the latest lightning system -  Lightning Web Component(lwc), features supported:
-* Search recent view records
+# ayLookup uses Salesforce's latest lightning system -  Lightning Web Component(lwc), features supported:
+* Auto search recent view records
 * Auto set icons for sobjects
-* Customize search result, can combine multiple columnes with less codig
+* Customize search result display
+* Use HTML5, ES6+
+* Use Javsacript Standard events
 * High performance adapting SOSL + SOQL
+* Compatible with aura envrionment
+* Optimiazied for SF1 Mobile Solutions
 
 
 ![ayLookup](https://user-images.githubusercontent.com/10925418/64737346-9d535300-d4ba-11e9-836c-8d6038c55d1e.gif)
