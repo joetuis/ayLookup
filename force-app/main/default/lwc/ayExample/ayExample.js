@@ -6,12 +6,12 @@ export default class AyExample extends LightningElement {
     @track recordTypesInit;
     @track filtersInit;
     @track selected;
-    @track preset = ['0011Q000023elZfQAI'];
+    @track preset = ['0014T0000044fVCQAY', '0014T0000044fVBQAY', '0014T0000044fVDQAY', '0014T0000044fVLQAY'];
     @track presetStr = JSON.stringify(this.preset);
 
     connectedCallback(){
-        this.recordTypes = ["0121Q000001YdotQAC"];
-        this.filters = ["Name like 'zxc%'"];
+        this.recordTypes = ["0124T000000HBGKQA4"];
+        this.filters = ["Type like 'Restaurant%'"];
         this.recordTypesInit = JSON.stringify(this.recordTypes);
         this.filtersInit = JSON.stringify(this.filters);
     }

@@ -7,20 +7,26 @@
         <div class="slds-grid slds-gutters slds-wrap body">
             <div class="slds-col slds-size_1-of-2">
                 <p>1.1 - Simple</p>
-                <c-ay-lookup type="Account" label="Click or Type Name of Account" placeholder="Search Account" sobject-type="Account">
+                <label>Type account name to search, recent viewed record will show when click on the input. <br/>Try search Thai Express</label>
+                <c-ay-lookup type="Account" label="" placeholder="Search Account" sobject-type="Account">
                 </c-ay-lookup>
             </div>
     
             <div class="slds-col slds-size_1-of-2"></div>
             
-            <div class="slds-col slds-size_1-of-2">
-                <p>1.2 - Filtered</p>
-                <lightning-input class="record-type-input" value={recordTypesInit} label="Only Search for Record Type Id">
+            
+            <div class="slds-col slds-size_1-of-1">
+                    <br/><br/><br/><br/>
+                <p>1.2 - Filters </p>
+                <lightning-input class="record-type-input" value={recordTypesInit} label="Restrict the search result record types">
                 </lightning-input>
-                <lightning-input class="custom-filter-input" value={filtersInit} label="Custom Filter">
+                <lightning-input class="custom-filter-input" value={filtersInit} label="Or add Custom Filters">
                     </lightning-input>
+                
+                <label>Now click the apply button</label>&nbsp;&nbsp;&nbsp;
                 <lightning-button label="Apply" onclick={handleFilterChange}></lightning-button>
-                <c-ay-lookup type="Account" label="Click or Type Name of Account" placeholder="Search Account" sobject-type="Account" 
+
+                <c-ay-lookup type="Account" label="Try search Thai Express again" placeholder="Search Account" sobject-type="Account" 
                     record-types={recordTypes} filters={filters}>
                 </c-ay-lookup>
             </div>
@@ -36,7 +42,7 @@
         <div class="slds-grid slds-gutters slds-wrap body">
             <div class="slds-col slds-size_1-of-2">
                 <p>2.1 - This example output the selected item</p>
-                <c-ay-lookup type="Account" label="Click or Type Name of Account" placeholder="Search Account" sobject-type="Account" 
+                <c-ay-lookup type="Account" label="Search to Thai, and select one record" placeholder="Search Account" sobject-type="Account" 
                     record-types={recordTypes} filters={filters} onselected={handleOnSelected}>
                 </c-ay-lookup>
 
@@ -56,7 +62,7 @@
                 <lightning-input value={presetStr} label="Input a list of Account Ids" onchange={handlePresetChange}>
                 </lightning-input>
 
-                <c-ay-lookup class="example3" type="Account" label="Click or Type Name of Account" placeholder="Search Account" sobject-type="Account" 
+                <c-ay-lookup class="example3" type="Account" label="Click the input to see preset list" placeholder="Search Account" sobject-type="Account" 
                     disable-recent-view preset-ids={preset} required>
                 </c-ay-lookup>
             </div>
