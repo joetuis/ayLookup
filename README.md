@@ -1,8 +1,8 @@
-# ayLookup is a Salesforce Lightning Web Component(lwc), the component has referenced other open source project but forks into different route to only focus on reusability and minimal coding to expidite your development, current supported features include:
+# ayLookup uses the latest lightning system -  Lightning Web Component(lwc), features supported:
 * Search recent view records
 * Auto set icons for sobjects
 * Customize search result, can combine multiple columnes with less codig
-* High performance using SOSL + SOQL
+* High performance adapting SOSL + SOQL
 
 
 ![ayLookup](https://user-images.githubusercontent.com/10925418/64737346-9d535300-d4ba-11e9-836c-8d6038c55d1e.gif)
