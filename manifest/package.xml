@@ -9,12 +9,13 @@
     <types>
         <members>ayLookup</members>
         <members>ayExample</members>
-        <members>demo</members>
+        <members>ayToolkits</members>
         <name>LightningComponentBundle</name>
     </types>
     <types>
         <members>lookupExample</members>
         <members>example</members>
+        <members>demo</members>
         <name>AuraDefinitionBundle</name>
     </types>
     <version>46.0</version>
