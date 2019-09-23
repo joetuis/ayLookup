@@ -18,6 +18,7 @@ import searchAction from '@salesforce/apex/ay_LookupController.search';
 import searchRecentViewed from '@salesforce/apex/ay_LookupController.searchRecentViewed';
 import getCurrentValue from '@salesforce/apex/ay_LookupController.getCurrentValue';
 import searchByIds from '@salesforce/apex/ay_LookupController.searchByIds';
+import {toolkits} from 'c/ayToolkits';
 
 const MINIMAL_SEARCH_TERM_LENGTH = 2; // Min number of chars required to search
 const SEARCH_DELAY = 300; // Wait 300 ms after user stops typing then, peform search
@@ -37,7 +38,7 @@ export default class ayLookup extends LightningElement {
     @api  
     get filters(){return this.soqlFilter;}
     set filters(value){
-        this.soqlFilter = value;
+        this.soqlFilter = Array.isArray(value) ? value : [value];
         if(!this.disableRecentView)
             this.getRecentView();
     }
@@ -45,7 +46,15 @@ export default class ayLookup extends LightningElement {
     @track searchResults = [];
     @track hasFocus = false;
     @track infoMessage;
+    @api get closeIconSize(){
+        return toolkits.isPhone() ? 'small' : 'x-small';
+    }
+    @api get wrapperClass(){
+        return toolkits.isPhone() ? "mobile slds-form-element" : "desktop slds-form-element"
+    }
+
     @api disableRecentView;//if true recentview is disabled
+    @api disabled;
 
     cleanSearchTerm;
     blurTimeout;
@@ -144,16 +153,8 @@ export default class ayLookup extends LightningElement {
         })
     }
 
-    preIds = [];
-    @api get presetIds(){return this. preIds;}
-    set presetIds(value){
-        this.preIds = value;
-        this.setPresetSearchResult(this.preIds);
-    }
-
     //set search result, show when user click the input
     @api setPresetSearchResult(ids){
-        //debugger;
         if(!ids || ids.length === 0){
             this.searchResults = [];
             return;
@@ -361,11 +362,14 @@ export default class ayLookup extends LightningElement {
             css += 'slds-combobox__input-value '
                 + (this.hasSelection() ? 'has-custom-border' : '');
         }
+
+        if(this.disabled == true)
+            css += ' readonly'
         return css;
     }
 
     get getComboboxClass() {
-        let css = 'slds-combobox__form-element slds-input-has-icon ';
+        let css = 'combobox-wrapper slds-combobox__form-element slds-input-has-icon ';
         if (this.isMultiEntry) {
             css += 'slds-input-has-icon_right';
         } else {
@@ -383,7 +387,7 @@ export default class ayLookup extends LightningElement {
     }
 
     get getClearSelectionButtonClass() {
-        return 'slds-button slds-button_icon slds-input__icon slds-input__icon_right '
+        return 'slds-button slds-button_icon slds-input__icon slds-input__icon_right btn-close '
             + (this.hasSelection() ? '' : 'slds-hide');
     }
 

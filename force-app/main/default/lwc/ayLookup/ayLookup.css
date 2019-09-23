@@ -52,7 +52,36 @@
 
 abbr.required{
     font-size: 0.8125rem;
-    margin: 0 .125rem;
+    margin: 0.125rem;
     color: rgb(194, 57, 52);
     font-weight: normal;
+    position: relative;
+    top: 3px;
+}
+
+input.readonly{
+    background: #eee;
+}
+
+.mobile .btn-close{
+    width: 1.5rem;
+    height: 1.5rem;
+}
+
+.mobile .btn-close lightning-icon{
+    position: relative;
+    right: 5px;
+    bottom: 7px;
+}
+
+.combobox-wrapper{/*this resolve icon position issue*/
+    max-height: 3em;
+}
+
+.desktop .combobox-wrapper{
+    height: 2.1rem;
+}
+
+ul{
+    padding-bottom: 3px;
 }
