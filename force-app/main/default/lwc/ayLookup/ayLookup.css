@@ -78,8 +78,12 @@ input.readonly{
     max-height: 3em;
 }
 
-.desktop .combobox-wrapper{
-    height: 2.1rem;
+/* .desktop .combobox-wrapper{
+    height: auto;
+} */
+.search-icon
+{
+    top:14px;
 }
 
 ul{
