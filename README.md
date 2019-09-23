@@ -1,4 +1,4 @@
-# ayLookup uses Salesforce's latest lightning system -  Lightning Web Component(lwc), features supported:
+# ayLookup is leveraging Salesforce's latest lightning system -  Lightning Web Component(lwc), features supported:
 * Auto search recent view records
 * Auto set icons for sobjects
 * Customize search result display
@@ -12,7 +12,8 @@
 ![ayLookup](https://user-images.githubusercontent.com/10925418/64737346-9d535300-d4ba-11e9-836c-8d6038c55d1e.gif)
 
 
-
+V1.2 Optimizie Mobile Look and Feel
+V1.2 Fix bugs and improve compatibility
 ***********************************************************************************
 ***********************************************************************************
 *DEMO:
