@@ -153,6 +153,13 @@ export default class ayLookup extends LightningElement {
         })
     }
 
+    preIds = [];	
+    @api get presetIds(){return this. preIds;}	
+    set presetIds(value){	
+        this.preIds = value;	
+        this.setPresetSearchResult(this.preIds);	
+    }
+
     //set search result, show when user click the input
     @api setPresetSearchResult(ids){
         if(!ids || ids.length === 0){
@@ -379,7 +386,7 @@ export default class ayLookup extends LightningElement {
     }
 
     get getSearchIconClass() {
-        let css = 'slds-input__icon slds-input__icon_right ';
+        let css = 'search-icon slds-input__icon slds-input__icon_right ';
         if (!this.isMultiEntry) {
             css += (this.hasSelection() ? 'slds-hide' : '');
         }
