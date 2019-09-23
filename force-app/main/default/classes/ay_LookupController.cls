@@ -44,7 +44,6 @@ public with sharing class ay_LookupController {
         String query = 'FIND :searchString IN NAME FIELDS RETURNING '
                           + type +'(Id, ' + qStrDis + ' ' 
                           + whereClause + ' ORDER BY systemmodstamp) LIMIT 20';
-        System.debug('+++++++++++++search query - ' + query);
         List<List<SObject>> results =  Search.query(query);
         List<SObject> records;  
         // System.debug('+++++++++++++records results:' + results);
@@ -92,7 +91,7 @@ public with sharing class ay_LookupController {
             List<ay_LookupSearchResult> ret = new List<ay_LookupSearchResult>();
             String whereClause = constructWhereClause(recordTypes, filters, false);
             String q = 'Select Id, ' + qStrDis + ' From ' + type + ' Where Id in :ids ' + whereClause + ' limit 10';
-            //System.debug('--------------The query is - ' + q);
+            // System.debug('--------------The query is - ' + q);
             List<SObject> qRes = Database.query(q);
             for(SObject sobj : qRes){
                 String n = fields.size() > 0 ? getDisplayName(sobj, fields) : (String)sobj.get(nameField);

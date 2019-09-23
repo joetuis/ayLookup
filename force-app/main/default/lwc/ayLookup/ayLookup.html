@@ -1,5 +1,5 @@
 <template>
-    <div class="slds-form-element">
+    <div class={wrapperClass}>
         <template if:true={label}>
             <template if:true={required}>
                 <abbr class="required">*</abbr> 
@@ -24,7 +24,7 @@
                         <input type="text" class={getInputClass} id="search-input"
                             aria-autocomplete="list" aria-controls="listbox" autocomplete="off"
                             role="textbox" placeholder={placeholder}
-                            value={getInputValue} readonly={isInputReadonly}
+                            value={getInputValue} readonly={disabled}
                             onfocus={handleFocus} onblur={handleBlur} oninput={handleInput}></input>
 
                         <template if:true={showMessage}>
@@ -48,9 +48,9 @@
 
                         <!-- Clear selection button icon for single entry lookups -->
                         <template if:false={isMultiEntry}>
-                            <button title="Remove selected option" type="button"
+                            <button title="Remove selected option" type="button" disabled={disabled}
                                 onclick={handleClearSelection} class={getClearSelectionButtonClass}>
-                                <lightning-icon icon-name="utility:close" size="x-small" alternative-text="Remove selected option"
+                                <lightning-icon icon-name="utility:close" size={closeIconSize} alternative-text="Remove selected option"
                                     class="slds-button__icon"></lightning-icon>
                             </button>
                         </template>
