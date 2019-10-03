@@ -30,7 +30,7 @@ https://anyang-developer-edition.na136.force.com/demos/s/ay-lookup
 
 *1.1 Basics
 
-<c:ayLookup required="true" type="Account" label="Search ACCOUNT" placeholder="Search Account" sobjectType="Account">
+<c:ayLookup required="true" sobjectType="Account" label="Search ACCOUNT" placeholder="Search Account">
 </c:ayLookup>
 
 
