@@ -71,8 +71,12 @@ export default class ayLookup extends LightningElement {
                 "value" : value,
                 "fields" : this.fields
             }).then(result => {
-                this.selection = [result];
-                this.fireSelected();
+                if(!result)
+                    this.selection = [];
+                else{
+                    this.selection = [result];
+                    this.fireSelected();
+                }
             })
         }
     }

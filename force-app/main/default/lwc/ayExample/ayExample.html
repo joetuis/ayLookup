@@ -9,7 +9,7 @@
                 <br/>
                 <p>1.1 - Simple</p>
                 <label>Type account name to search, recent viewed record will show when click on the input. <br/>Try search Thai Express</label>
-                <c-ay-lookup type="Account" label="" placeholder="Search Account" sobject-type="Account">
+                <c-ay-lookup label="" placeholder="Search Account" sobject-type="Account">
                 </c-ay-lookup>
             </div>
     
@@ -27,8 +27,8 @@
                 <label>Now click the apply button</label>&nbsp;&nbsp;&nbsp;
                 <lightning-button label="Apply" onclick={handleFilterChange}></lightning-button>
 
-                <c-ay-lookup type="Account" label="Try search Thai Express again" placeholder="Search Account" sobject-type="Account" 
-                    record-types={recordTypes} filters={filters}>
+                <c-ay-lookup label="Clear the pre-populated value below and Try search Thai Express again" placeholder="Search Account" sobject-type="account"
+                    record-types={recordTypes} filters={filters} value="0014T0000044fVGQAY">
                 </c-ay-lookup>
             </div>
         </div>
@@ -43,11 +43,17 @@
         <div class="slds-grid slds-gutters slds-wrap body">
             <div class="slds-col slds-size_1-of-2">
                 <p>2.1 - This example output the selected item</p>
-                <c-ay-lookup type="Account" label="Search to Thai, and select one record" placeholder="Search Account" sobject-type="Account" 
+                <c-ay-lookup label="Search to Thai, and select one record" placeholder="Search Account" sobject-type="account"
                     record-types={recordTypes} filters={filters} onselected={handleOnSelected}>
                 </c-ay-lookup>
 
                 You've selected:<h3>{selected}</h3>
+            </div>
+
+            <div class="slds-col slds-size_1-of-2">
+                <p>2.2 - Search other object try 'Babara'</p>
+                <c-ay-lookup label="Search a person" placeholder="Search Contact" sobject-type="contact">
+                </c-ay-lookup>
             </div>
         </div>
     </section>
@@ -63,7 +69,7 @@
                 <lightning-input value={presetStr} label="Input a list of Account Ids" onchange={handlePresetChange}>
                 </lightning-input>
 
-                <c-ay-lookup class="example3" type="Account" label="Click the input to see preset list" placeholder="Search Account" sobject-type="Account" 
+                <c-ay-lookup class="example3" label="Click the input to see preset list" placeholder="Search Account" sobject-type="account"
                     disable-recent-view preset-ids={preset} required>
                 </c-ay-lookup>
             </div>
