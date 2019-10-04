@@ -11,7 +11,7 @@ export default class AyExample extends LightningElement {
 
     connectedCallback(){
         this.recordTypes = ["0124T000000HBGKQA4"];
-        this.filters = ["Type like 'Restaurant%'"];
+        this.filters = [`Type like 'Restaurant%'`, `Name like '%Markham'`];
         this.recordTypesInit = JSON.stringify(this.recordTypes);
         this.filtersInit = JSON.stringify(this.filters);
     }
